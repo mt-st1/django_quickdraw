@@ -1,0 +1,38 @@
+{
+  "name": "quickdraw-demo",
+  "version": "1.0.0",
+  "description": "Demo app of QuickDraw",
+  "main": "index.js",
+  "repository": "git@github.com:mt-st1/django_quickdraw.git",
+  "author": "Takumi Ishiyama <mt.stone20@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:webpack": "webpack --mode production",
+    "watch": "npm-run-all --parallel flow watch:webpack",
+    "watch:webpack": "webpack --mode development --watch --progress",
+    "flow": "flow",
+    "flow:check": "flow check",
+    "flow:stop": "flow stop"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^5.10.0",
+    "eslint-plugin-flowtype": "^3.2.0",
+    "eslint-plugin-react": "^7.11.1",
+    "flow-bin": "^0.89.0",
+    "webpack": "^4.28.1",
+    "webpack-bundle-tracker": "^0.4.2-beta",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.11"
+  },
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}
