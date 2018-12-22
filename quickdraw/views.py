@@ -2,5 +2,5 @@ from django.shortcuts import render
 
 
 # Create your views here.
-def top(request):
+def root(request):
     return render(request, 'root.html')
