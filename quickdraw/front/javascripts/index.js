@@ -4,7 +4,7 @@ import HelloMessage from './sub';
 
 const App = () => (
   <div>
-    <h1>Hello React!</h1>
+    <h1>Hello Django & React!</h1>
     <HelloMessage
       message='with Babel & Webpack'
     />
