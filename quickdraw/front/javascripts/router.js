@@ -7,7 +7,7 @@ const QuickDrawRouter = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path='/' component={ TopPage } />
-      <Route component={ NotFoundPage} />
+      <Route component={ NotFoundPage } />
     </Switch>
   </BrowserRouter>
 );

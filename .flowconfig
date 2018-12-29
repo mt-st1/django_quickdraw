@@ -8,6 +8,7 @@
 [lints]
 
 [options]
+module.name_mapper='^components/\(.*\)$' -> '<PROJECT_ROOT>/quickdraw/front/javascripts/components/\1'
 
 [strict]
 
