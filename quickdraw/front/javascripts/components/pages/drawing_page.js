@@ -4,6 +4,7 @@ import DrawingCanvas from '../drawing_canvas';
 const titleStyle = {
   textAlign: 'center',
   backgroundColor: '#ffd139',
+  marginBottom: '30px',
 };
 
 const DrawingPage = () => (

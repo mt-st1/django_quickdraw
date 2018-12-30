@@ -4,3 +4,4 @@ node_modules
 yarn-error.log
 webpack-stats.json
 bundle.js
+.vscode
