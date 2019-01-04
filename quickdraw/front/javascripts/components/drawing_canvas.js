@@ -1,13 +1,20 @@
 import React from 'react';
 import axios from 'axios';
 import Stroke from '../classes/stroke';
-// import { Button } from 'react-bootstrap';
-import { FaEraser } from 'react-icons/fa';
+import { Categories } from '../constants/categories';
+import { FaEraser, FaForward } from 'react-icons/fa';
+
+const drawThemeStyle = {
+  textAlign: 'center',
+  fontSize: '32px',
+  fontWeight: '450',
+};
 
 const drawAreaStyle = {
   display: 'flex',
   justifyContent: 'center',
-}
+  marginLeft: '36px',
+};
 
 const canvasStyle = {
   border: '5px solid orange',
@@ -21,13 +28,35 @@ const eraserIconStyle = {
   cursor: 'pointer',
 };
 
+const forwardIconStyle = {
+  width: '34px',
+  height: '34px',
+  marginLeft: '11px',
+  marginTop: '10px',
+  cursor: 'pointer',
+}
+
 const predictAreaStyle = {
   textAlign: 'center',
+  marginTop: '10px',
+};
+
+const rightPredictStyle = {
+  fontSize: 'x-large',
+  padding: '2px 5px',
+  margin:  '2em 0',
+  border: 'solid 3px #ff0000',
+  borderRadius: '10px',
+}
+
+const wrongPredictStyle = {
+  fontSize: 'x-large',
 };
 
 const CANVAS_WIDTH = 256;
 const CANVAS_HIGHT = 256;
 const CANVAS_LINE_WIDTH = 3;
+const CATEGORY_SIZE = Categories.length;
 
 var stroke = null;
 
@@ -35,26 +64,50 @@ const convertToDrawingData = (drawStrokes) => (
   {drawing_data: [drawStrokes.map(stroke => [stroke.x_list, stroke.y_list])]}
 );
 
-const renderPredicts = (predicts) => {
+const getCategoryRandom = () => (
+  Categories[Math.floor(Math.random() * CATEGORY_SIZE)]
+);
+
+const renderThemeArea = (drawTheme) => (
+  <div style={drawThemeStyle}>
+    [ {drawTheme} ]
+  </div>
+);
+
+const renderPredicts = (predicts, rightPredictIdx) => {
   if (predicts.length !== 0) {
     return (
       <div>
-        {predicts.map((predict, idx) => (
-          <span key={idx}>{idx+1}: {predict} </span>
-        ))}
+        {predicts.map((predict, idx) => {
+          const predictStyle = idx === rightPredictIdx ? rightPredictStyle : wrongPredictStyle;
+          return (
+            <span key={idx}>
+              <span style={predictStyle}>{idx+1}:{predict}</span>
+              &nbsp;&nbsp;
+            </span>
+          );
+        })}
       </div>
     )
   }
-}
+};
 
 class DrawingCanvas extends React.Component {
   constructor() {
     super();
     this.state = {
       isDrawing: false,
+      isRightPredict: false,
+      drawTheme: null,
       drawStrokes: [],
       predicts: [],
+      rightPredictIdx: null,
     };
+  }
+
+  componentDidMount() {
+    const drawTheme = getCategoryRandom();
+    this.setState({ drawTheme });
   }
 
   getContext() {
@@ -67,7 +120,21 @@ class DrawingCanvas extends React.Component {
   fetchPredictResult(drawingData) {
     axios.get('/predict_drawing', { params: drawingData })
       .then(res => {
-        this.setState({ predicts: res.data.predict_result })
+        const predicts = res.data.predict_result;
+        const rightPredictIdx = predicts.indexOf(this.state.drawTheme);
+        if (rightPredictIdx !== -1) {
+          this.setState({
+            isRightPredict: true,
+            predicts,
+            rightPredictIdx
+          });
+        } else {
+          this.setState({
+            isRightPredict: false,
+            predicts,
+            rightPredictIdx: null
+          });
+        }
       })
       .catch(err => {console.log('axiosGetError', err);})
   }
@@ -79,18 +146,20 @@ class DrawingCanvas extends React.Component {
       stroke.x_list.push(x);
       stroke.y_list.push(y);
     }
-    const cxt = this.getContext();
-    cxt.moveTo(x, y);
+    const ctx = this.getContext();
+    ctx.moveTo(x, y);
   }
 
   finishDrawing() {
     let strokes = this.state.drawStrokes;
     if (stroke !== null) {
       strokes.push(stroke)
-      this.setState({ isDrawing: false, drawStrokes: strokes });
+      this.setState({
+        isDrawing: false,
+        drawStrokes: strokes
+      });
       stroke = null;
       this.fetchPredictResult(convertToDrawingData(this.state.drawStrokes));
-      // debugger;
     }
   }
 
@@ -123,31 +192,68 @@ class DrawingCanvas extends React.Component {
     ctx.fillStyle = 'white';
     ctx.globalAlpha = 1.0;
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HIGHT);
-    this.setState({ isDrawing: false, drawStrokes: [], predicts: [] });
+    this.setState({
+      isDrawing: false,
+      isRightPredict: false,
+      drawStrokes: [],
+      predicts: []
+    });
+  }
+
+  changeTargetDrawing() {
+    const drawTheme = getCategoryRandom();
+    this.clearCanvas();
+    this.setState({ drawTheme });
+  }
+
+  renderActionIcons() {
+    return (
+      <div>
+        <FaEraser
+          onClick={() => { this.clearCanvas() }}
+          style={eraserIconStyle}
+        />
+        <br/>
+        <FaForward
+          onClick={() => { this.changeTargetDrawing() }}
+          style={forwardIconStyle}
+        />
+      </div>
+    );
+  }
+
+  renderDrawArea() {
+    return (
+      <div style={drawAreaStyle}>
+        <canvas
+          ref={ref => { this.canvas = ref }}
+          width={`${CANVAS_WIDTH}px`}
+          height={`${CANVAS_HIGHT}px`}
+          onMouseDown={e => { this.beginDrawing(e.nativeEvent.offsetX, e.nativeEvent.offsetY) }}
+          onMouseUp={() => { this.finishDrawing() }}
+          onMouseLeave={() => { this.finishDrawing() }}
+          onMouseMove={e => { this.draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY) }}
+          style={canvasStyle}
+        />
+        {this.renderActionIcons()}
+      </div>
+    );
+  }
+
+  renderPredictArea() {
+    return (
+      <div style={predictAreaStyle}>
+        {renderPredicts(this.state.predicts, this.state.rightPredictIdx)}
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
-        <div style={drawAreaStyle}>
-          <canvas
-            ref={ref => { this.canvas = ref }}
-            width={`${CANVAS_WIDTH}px`}
-            height={`${CANVAS_HIGHT}px`}
-            onMouseDown={e => { this.beginDrawing(e.nativeEvent.offsetX, e.nativeEvent.offsetY) }}
-            onMouseUp={() => { this.finishDrawing() }}
-            onMouseLeave={() => { this.finishDrawing() }}
-            onMouseMove={e => { this.draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY) }}
-            style={canvasStyle}
-          />
-          <FaEraser
-            onClick={() => { this.clearCanvas() }}
-            style={eraserIconStyle}
-          />
-        </div>
-        <div style={predictAreaStyle}>
-          {renderPredicts(this.state.predicts)}
-        </div>
+        {renderThemeArea(this.state.drawTheme)}
+        {this.renderDrawArea()}
+        {this.renderPredictArea()}
       </div>
     );
   }

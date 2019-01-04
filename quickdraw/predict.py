@@ -27,4 +27,4 @@ def predict(input_data):
         with session_var.as_default():
             preds = model.predict(input_data)
             top3_ids = np.argsort(-preds)[:, 0:3]
-            return [category_dict[id] for id in top3_ids[0]]
+            return [category_dict[id].replace("_", " ") for id in top3_ids[0]]
