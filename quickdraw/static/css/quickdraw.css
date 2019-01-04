@@ -1,0 +1,55 @@
+.drawing-page > h1 {
+  text-align: center;
+  background-color: #ffd139;
+  padding: 10px 0px;
+  margin-bottom: 30px;
+}
+
+.drawing-page > .theme-area {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 450;
+}
+
+.drawing-page > .canvas-area {
+  display: flex;
+  justify-content: center;
+  margin-left: 36px;
+}
+
+.drawing-page > .result-area {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.canvas-area > canvas {
+  border: 5px solid orange;
+  background-color: white;
+}
+
+.canvas-area > .icon-list > .icon-eraser {
+  width: 36px;
+  height: 36px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.canvas-area > .icon-list > .icon-forward {
+  width: 34px;
+  height: 34px;
+  margin-left: 11px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.result-area > .predict-list > span > .predict-right {
+  font-size: x-large;
+  padding: 2px 5px;
+  margin: 2em 0;
+  border: solid 3px #ff0000;
+  border-radius: 10px;
+}
+
+.result-area > .predict-list > span > .predict-wrong {
+  font-size: x-large;
+}
