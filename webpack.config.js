@@ -14,9 +14,25 @@ module.exports = {
     publicPath: ASSET_SERVER,
   },
 
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'quickdraw/front/javascripts'),
+      'node_modules',
+    ]
+  },
+
   devServer: {
     port: 8888,
-    contentBase: path.resolve(__dirname, 'quickdraw/static')
+    contentBase: path.resolve(__dirname, 'quickdraw/static'),
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost:8080',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-id, Content-Length, X-Requested-With',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    },
+    https: false,
+    disableHostCheck: true,
   },
 
   plugins: [
@@ -42,8 +58,4 @@ module.exports = {
       }
     ]
   },
-
-  resolve: {
-    extensions: ['*', '.js', '.jsx']
-  }
 }

@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% load render_bundle from webpack_loader %}
+{% load static %}
 
-{% block title %}Sample{% endblock %}
+{% block quickdraw_style %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/quickdraw.css' %}">
+{% endblock %}
+
 {% block body %}
   <div id="react-root"></div>
   {% render_bundle 'main' %}

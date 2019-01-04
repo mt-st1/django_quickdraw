@@ -1,14 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HelloMessage from './sub';
+import QuickDrawRouter from './router';
 
-const App = () => (
-  <div>
-    <h1>Hello Django & React!</h1>
-    <HelloMessage
-      message='with Babel & Webpack'
-    />
-  </div>
-);
-
-ReactDOM.render(<App />, document.getElementById('react-root'));
+ReactDOM.render(<QuickDrawRouter />, document.getElementById('react-root'));
