@@ -54,11 +54,7 @@ MIDDLEWARE = [
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-MIDDLEWARE_CLASSES = (
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-)
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 ROOT_URLCONF = 'django_quickdraw.urls'
 
