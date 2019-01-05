@@ -1,7 +1,8 @@
 __pycache__
+quickdraw_env
 db.sqlite3
 node_modules
 yarn-error.log
 webpack-stats.json
-bundle.js
+bundles
 .vscode
