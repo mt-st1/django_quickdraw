@@ -4,6 +4,6 @@ db.sqlite3
 node_modules
 yarn-error.log
 webpack-stats.json
-static
+staticfiles
 bundles
 .vscode
