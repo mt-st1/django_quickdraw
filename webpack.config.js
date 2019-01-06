@@ -1,7 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 
-const ASSET_SERVER = process.env.ASSET_SERVER || 'http://localhost:8888/';
+const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 module.exports = {
   context: __dirname,
@@ -11,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'quickdraw/static/bundles'),
     filename: 'bundle.js',
-    publicPath: ASSET_SERVER,
+    publicPath: ASSET_PATH,
   },
 
   resolve: {
@@ -37,6 +38,9 @@ module.exports = {
 
   plugins: [
     new BundleTracker({filename: './webpack-stats.json'}),
+    new webpack.DefinePlugin({
+      'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+    }),
   ],
 
   module: {
