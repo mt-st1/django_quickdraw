@@ -7,3 +7,4 @@ webpack-stats.json
 staticfiles
 bundles
 .vscode
+.DS_Store
