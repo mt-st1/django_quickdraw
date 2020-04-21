@@ -18,13 +18,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1ev#9b0xem%z4z21@pey4ypdhw*k9s)-a_h3-^&2bu$s5e+her'
-
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    'django-quickdraw-demo-app.herokuapp.com',
+    'django-quickdraw-demo.herokuapp.com',
 ]
 
 
@@ -134,7 +131,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
     [os.path.join(BASE_DIR, 'quickdraw', 'static')]
