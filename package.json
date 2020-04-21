@@ -9,6 +9,7 @@
   "private": true,
   "scripts": {
     "build:webpack": "webpack --mode production",
+    "server": "webpack-dev-server",
     "watch": "npm-run-all --parallel flow watch:webpack",
     "watch:webpack": "webpack --mode development --watch --progress",
     "flow": "flow",
