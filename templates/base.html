@@ -1,3 +1,5 @@
+{% load render_bundle from webpack_loader %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,10 +7,13 @@
   <title>{% block title %}Quick Draw Demo{% endblock %}</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   {% block quickdraw_style %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/quickdraw.css' %}">
   {% endblock %}
 </head>
 <body>
   {% block body %}
+  <div id="react-root"></div>
+  {% render_bundle 'main' %}
   {% endblock %}
 </body>
 </html>
