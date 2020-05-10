@@ -5,6 +5,7 @@ node_modules
 yarn-error.log
 webpack-stats.json
 staticfiles
+static
 bundles
 .vscode
 .DS_Store

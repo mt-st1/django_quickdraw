@@ -10,7 +10,7 @@ module.exports = {
   entry: './quickdraw/front/javascripts/index.js',
 
   output: {
-    path: path.resolve(__dirname, 'quickdraw/static/bundles'),
+    path: path.resolve(__dirname, 'quickdraw/static/'),
     filename: 'bundle.js',
     publicPath: ASSET_PATH,
   },
@@ -20,7 +20,7 @@ module.exports = {
     modules: [
       path.resolve(__dirname, 'quickdraw/front/javascripts'),
       'node_modules',
-    ]
+    ],
   },
 
   devServer: {
@@ -29,7 +29,8 @@ module.exports = {
     headers: {
       'Access-Control-Allow-Origin': 'http://localhost:8080',
       'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-id, Content-Length, X-Requested-With',
+      'Access-Control-Allow-Headers':
+        'Content-Type, Authorization, x-id, Content-Length, X-Requested-With',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
     },
     https: false,
@@ -37,9 +38,9 @@ module.exports = {
   },
 
   plugins: [
-    new BundleTracker({filename: './webpack-stats.json'}),
+    new BundleTracker({ filename: './webpack-stats.json' }),
     new webpack.DefinePlugin({
-      'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH)
+      'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
     }),
   ],
 
@@ -51,15 +52,12 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [
-                ['env', { 'modules': false }],
-                'react'
-              ]
-            }
-          }
+              presets: [['env', { modules: false }], 'react'],
+            },
+          },
         ],
         exclude: /node_modules/,
-      }
-    ]
+      },
+    ],
   },
-}
+};
