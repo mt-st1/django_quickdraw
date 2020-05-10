@@ -14,8 +14,7 @@
     "watch:webpack": "webpack --mode development --watch --progress",
     "flow": "flow",
     "flow:check": "flow check",
-    "flow:stop": "flow stop",
-    "heroku-postbuild": "echo Skip build on Heroku"
+    "flow:stop": "flow stop"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
